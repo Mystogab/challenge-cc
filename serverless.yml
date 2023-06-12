@@ -1,0 +1,76 @@
+service: cc-challenge
+frameworkVersion: '3'
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+            - sqs:*
+            - s3:*
+          Resource:
+            - "*"
+
+functions:
+  task:
+    timeout: 300
+    environment:
+      TASK_QUEUE_URL: !Ref TaskQueue
+      TASK_TABLE_NAME: !Ref TaskTable
+      # TASK_QUEUE_URL: https://sqs.us-east-1.amazonaws.com/172934944598/TaskQueue
+      # TASK_TABLE_NAME: TaskTable
+        # Fn::GetAtt:
+        #     - TaskQueue
+        #     - Arn
+    handler: dist/task/index.handler
+    events:
+      - httpApi: '*'
+
+  image:
+    timeout: 300
+    environment:
+      PIC_BUCKET: !Ref pictogabbucket
+      TASK_API: !GetAtt HttpApi.ApiEndpoint
+    handler: dist/image/index.handler
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - TaskQueue
+              - Arn
+          batchSize: 2
+
+resources:
+  Resources:
+    TaskQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: TaskQueue
+    
+    TaskTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: TaskTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+              ReadCapacityUnits: 10
+              WriteCapacityUnits: 10
+        # BillingMode: PAY_PER_REQUEST
+    pictogabbucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: pictogabbucket
+        AccessControl: Private
