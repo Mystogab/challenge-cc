@@ -22,7 +22,7 @@ npx sls deploy
 You probably may want to change the S3 bucket name in your serverless.yml file.
 
 ## There is Room for improvement
-I've tryied to finish it ASAP. So a lot of stuff that I would love to make, wasn't made at all, so, in order to you see that I'm half way madness I'm leving here a key list of awesome "i-had-no-time-neither-will-if-nobody-pay-me" thinks to do:
+I've tryied to finish it ASAP. So a lot of stuff that I would love to make, wasn't made at all, so, in order to you see that I'm half way madness I'm leving here a key list of awesome "i-had-no-time-neither-will-if-nobody-pay-me" things to do:
 
 1. <b>Terraform</b>, maybe a little bit more complex -or not- but it pays a lot in some ways (like being able to destroy all easyly or keep it a bit cloud agnostic)
 
@@ -39,6 +39,6 @@ Anyway I've tried to keep all SIMPLE (KISS).
 
 7. <b>Parameter Store</b>: It would be nice if it use some parameter store AWS SSM to store sensible data.
 
-8. <b>A lot of cool stuff</b>: Yeah I know, its kind of general way to say it but thinks like using ports to define adapters interafce in some ways (even when Functional Programming use their own functions parameters as interface), a config directory for each lambda, decide if you want to split use cases across multiple lambdas or use lambda as a kind-of-microservice (it also works), and a lot of things that probably im missing but hey!, you got your challenge done, and you can test it on your own cloud by changing the S3 bucket name and run a simple: `sls deploy`. 
+8. <b>A lot of cool stuff</b>: Yeah I know, its kind of general way to say it but I think like using ports to define adapters interafce in some ways (even when Functional Programming use their own functions parameters as interface), a config directory for each lambda, decide if you want to split use cases across multiple lambdas or use lambda as a kind-of-microservice (it also works), and a lot of things that probably im missing but hey!, you got your challenge done, and you can test it on your own cloud by changing the S3 bucket name and run a simple: `sls deploy`. 
 
 9. I'm wondering, do you really need me to set up all this stuff to know the awesome guy I am?, we could just have a chat, you know drink some beers and save some time but dont missunderstand me, not judging, just saying.
